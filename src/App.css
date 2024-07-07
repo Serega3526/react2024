@@ -1,14 +1,14 @@
 .topLine {
   height: 60px;
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
-.bottomLine{
+.bottomLine {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
 }
-.peopleCard{
+.peopleCard {
   width: 260px;
   padding: 10px 30px;
   border: 1px solid gray;

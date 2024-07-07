@@ -7,9 +7,10 @@ class App extends Component {
   render(): ReactNode {
     return (
       <>
-      <TopLine/>
-      <BottomLine/></>
-    )
+        <TopLine />
+        <BottomLine />
+      </>
+    );
   }
 }
 

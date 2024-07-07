@@ -10,7 +10,7 @@
     "lint:write": "eslint ./src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "format:fix": "prettier src/ --write",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky src/"
   },
   "dependencies": {
     "eslint-plugin-react-compiler": "^0.0.0-experimental-0998c1e-20240625",
