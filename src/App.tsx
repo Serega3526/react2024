@@ -1,14 +1,15 @@
 import { Component, ReactNode } from 'react';
 import './App.css';
-import TopLine from './components/topLine';
 import BottomLine from './components/bottomLine';
+import ErrorBoundary from './components/ErrorBoundary';
 
 class App extends Component {
   render(): ReactNode {
     return (
       <>
-        <TopLine />
-        <BottomLine />
+        <ErrorBoundary>
+          <BottomLine />
+        </ErrorBoundary>
       </>
     );
   }

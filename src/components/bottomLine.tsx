@@ -1,5 +1,6 @@
 import { Component, ReactNode } from 'react';
 import PeopleItem from './peopleItem';
+import ErrorButton from './buttonError';
 import { state, props } from '../types/types';
 
 const BASE_PATH = 'https://swapi.dev/api';
@@ -51,6 +52,7 @@ class BottomLine extends Component {
   setResult = (result: Response) => {
     this.setState({ result });
   };
+
   render(): ReactNode {
     const { searchQuerry, result, loading } = this.state;
 
@@ -59,8 +61,9 @@ class BottomLine extends Component {
         <div className="topLine">
           <input type="search" onChange={this.handleInputChange} value={searchQuerry} />
           <button onClick={this.getSearch}>Search</button>
+          <ErrorButton />
         </div>
-        {loading ? <div>Загрузка</div> : null}
+        {loading ? <div>Загрузка...</div> : null}
         <div className="bottomLine">
           <>
             {result.map((item: props) => (
