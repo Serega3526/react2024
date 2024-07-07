@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import { props } from './bottomLine';
+import { props } from '../types/types';
 
 class PeopleItem extends Component<props> {
   render(): ReactNode {
