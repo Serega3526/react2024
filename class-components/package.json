@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint ./src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:write": "eslint ./src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
-    "prettier": "prettier src/ --write",
+    "format:fix": "prettier src/ --write",
     "preview": "vite preview",
     "prepare": "husky"
   },
