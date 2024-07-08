@@ -70,7 +70,7 @@ class BottomLine extends Component {
         ) : (
           <div className="bottomLine">
             <>
-              {result.map((item: props) => (
+              {result.map((item: props, key) => (
                 <PeopleItem
                   birth_year={item.birth_year}
                   eye_color={item.eye_color}
@@ -80,6 +80,7 @@ class BottomLine extends Component {
                   mass={item.mass}
                   name={item.name}
                   skin_color={item.skin_color}
+                  key={key}
                 />
               ))}
             </>
