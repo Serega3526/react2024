@@ -2,6 +2,7 @@ import { Component, ReactNode } from 'react';
 import PeopleItem from './peopleItem';
 import ErrorButton from './buttonError';
 import { state, props } from '../types/types';
+import SearchString from '../localStorage/localStorage';
 
 const BASE_PATH = 'https://swapi.dev/api';
 const PAGE_PATH = '/people';
@@ -13,7 +14,7 @@ class BottomLine extends Component {
   }
 
   state: state = {
-    searchQuerry: '',
+    searchQuerry: SearchString.getString(),
     result: [],
     loading: false,
   };
@@ -46,6 +47,7 @@ class BottomLine extends Component {
 
   getSearch = () => {
     const { searchQuerry } = this.state;
+    SearchString.setString(searchQuerry);
     this.fetchData(searchQuerry);
   };
 
@@ -63,23 +65,26 @@ class BottomLine extends Component {
           <button onClick={this.getSearch}>Search</button>
           <ErrorButton />
         </div>
-        {loading ? <div>Загрузка...</div> : null}
-        <div className="bottomLine">
-          <>
-            {result.map((item: props) => (
-              <PeopleItem
-                birth_year={item.birth_year}
-                eye_color={item.eye_color}
-                gender={item.gender}
-                hair_color={item.hair_color}
-                height={item.height}
-                mass={item.mass}
-                name={item.name}
-                skin_color={item.skin_color}
-              />
-            ))}
-          </>
-        </div>
+        {loading ? (
+          <span className="loader"></span>
+        ) : (
+          <div className="bottomLine">
+            <>
+              {result.map((item: props) => (
+                <PeopleItem
+                  birth_year={item.birth_year}
+                  eye_color={item.eye_color}
+                  gender={item.gender}
+                  hair_color={item.hair_color}
+                  height={item.height}
+                  mass={item.mass}
+                  name={item.name}
+                  skin_color={item.skin_color}
+                />
+              ))}
+            </>
+          </div>
+        )}
       </>
     );
   }
