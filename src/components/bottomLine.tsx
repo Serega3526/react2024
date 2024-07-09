@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 import PeopleItem from './peopleItem';
 import ErrorButton from './buttonError';
 import { state, props } from '../types/types';
@@ -36,7 +36,7 @@ class BottomLine extends Component {
           loading: false,
         });
       })
-      .catch((error) => error);
+      .catch((error: ErrorInfo) => error);
   };
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
