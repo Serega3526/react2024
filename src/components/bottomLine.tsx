@@ -1,94 +1,76 @@
-import { Component, ErrorInfo, ReactNode } from 'react';
+import { ErrorInfo, useEffect, useState } from 'react';
 import PeopleItem from './peopleItem';
 import ErrorButton from './buttonError';
-import { state, props } from '../types/types';
+import { props } from '../types/types';
 import SearchString from '../localStorage/localStorage';
 
-const BASE_PATH = 'https://swapi.dev/api';
-const PAGE_PATH = '/people';
-const SEARCH_PATH = '/?search=';
 
-class BottomLine extends Component {
-  constructor(props: props) {
-    super(props);
-  }
 
-  state: state = {
-    searchQuerry: SearchString.getString(),
-    result: [],
-    loading: false,
-  };
+function BottomLine () {
+  const [searchQuerry, setSearchQuerry] = useState(SearchString.getString())
+  const [result, setResult] = useState([])
+  const [loading, setLoading] = useState(false)
 
-  componentDidMount(): void {
-    const { searchQuerry } = this.state;
-    this.fetchData(searchQuerry);
-  }
+  const BASE_PATH = 'https://swapi.dev/api';
+  const PAGE_PATH = '/people';
+  const SEARCH_PATH = '/?search=';
 
-  fetchData = (searchQuerry: string) => {
-    this.setState({
-      loading: true,
-    });
+
+
+  const fetchData = (searchQuerry: string) => {
+    setLoading(true)
+    
     fetch(`${BASE_PATH}${PAGE_PATH}${SEARCH_PATH}${searchQuerry}`)
       .then((res) => res.json())
       .then((result) => {
-        this.setResult(result.results);
-        this.setState({
-          loading: false,
-        });
+        setResult(result.results)
+        setLoading(false)
       })
       .catch((error: ErrorInfo) => error);
   };
+  useEffect(() => {
+    fetchData(searchQuerry)
+  })
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      searchQuerry: e.target.value,
-    });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuerry(e.target.value)
   };
 
-  getSearch = () => {
-    const { searchQuerry } = this.state;
+  const getSearch = () => {
     SearchString.setString(searchQuerry);
-    this.fetchData(searchQuerry);
+    fetchData(searchQuerry);
   };
 
-  setResult = (result: Response) => {
-    this.setState({ result });
-  };
-
-  render(): ReactNode {
-    const { searchQuerry, result, loading } = this.state;
-
-    return (
-      <>
-        <div className="topLine">
-          <input type="search" onChange={this.handleInputChange} value={searchQuerry} />
-          <button onClick={this.getSearch}>Search</button>
-          <ErrorButton />
+  return (
+    <>
+      <div className="topLine">
+        <input type="search" onChange={handleInputChange} value={searchQuerry} />
+        <button onClick={getSearch}>Search</button>
+        <ErrorButton />
+      </div>
+      {loading ? (
+        <span className="loader"></span>
+      ) : (
+        <div className="bottomLine">
+          <>
+            {result.map((item: props, key) => (
+              <PeopleItem
+                birth_year={item.birth_year}
+                eye_color={item.eye_color}
+                gender={item.gender}
+                hair_color={item.hair_color}
+                height={item.height}
+                mass={item.mass}
+                name={item.name}
+                skin_color={item.skin_color}
+                key={key}
+              />
+            ))}
+          </>
         </div>
-        {loading ? (
-          <span className="loader"></span>
-        ) : (
-          <div className="bottomLine">
-            <>
-              {result.map((item: props, key) => (
-                <PeopleItem
-                  birth_year={item.birth_year}
-                  eye_color={item.eye_color}
-                  gender={item.gender}
-                  hair_color={item.hair_color}
-                  height={item.height}
-                  mass={item.mass}
-                  name={item.name}
-                  skin_color={item.skin_color}
-                  key={key}
-                />
-              ))}
-            </>
-          </div>
-        )}
-      </>
-    );
-  }
+      )}
+    </>
+  );
 }
 
 export default BottomLine;
