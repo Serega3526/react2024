@@ -1,23 +1,19 @@
-import { Component, ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 
-class ErrorButton extends Component {
-  state = {
-    isError: false,
-  };
+function ErrorButton () {
+  const [isError, setIsError] = useState(false)
 
-  componentDidUpdate(): void {
-    if (this.state.isError) {
+  useEffect(() => {
+    if (isError) {
       throw new Error('Тут все сломалось');
     }
-  }
+  },[isError])
 
-  handleError = () => {
-    this.setState({ isError: true });
+  const handleError = () => {
+    setIsError(true );
   };
 
-  render(): ReactNode {
-    return <button onClick={this.handleError}>ERROR</button>;
-  }
+  return <button onClick={handleError}>ERROR</button>;
 }
 
 export default ErrorButton;
