@@ -3,6 +3,7 @@ import PeopleItem from './peopleItem';
 import ErrorButton from './buttonError';
 import { props } from '../types/types';
 import SearchString from '../localStorage/localStorage';
+import { Link } from 'react-router-dom';
 
 
 
@@ -30,7 +31,7 @@ function BottomLine () {
   };
   useEffect(() => {
     fetchData(searchQuerry)
-  })
+  },[searchQuerry])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuerry(e.target.value)
@@ -44,6 +45,10 @@ function BottomLine () {
   return (
     <>
       <div className="topLine">
+        <nav>
+          <li><Link to="/">Main</Link></li>
+          <li><Link to="/404">404</Link></li>
+        </nav>
         <input type="search" onChange={handleInputChange} value={searchQuerry} />
         <button onClick={getSearch}>Search</button>
         <ErrorButton />
