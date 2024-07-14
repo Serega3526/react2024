@@ -1,22 +1,25 @@
-import { Component, ReactNode } from 'react';
+
 import { props } from '../types/types';
+import { Link } from 'react-router-dom';
 
+export default function PeopleItem (props: props) {
+  
 
-class PeopleItem extends Component<props> {
-  render(): ReactNode {
-    return (
+  
+
+  return (
+    <Link to="/test">
       <div className="peopleCard">
-        <p>Name: {this.props.name}</p>
-        <p>Eye color: {this.props.eye_color}</p>
-        <p>Birth year: {this.props.birth_year}</p>
-        <p>Gender: {this.props.gender}</p>
-        <p>Hair color: {this.props.hair_color}</p>
-        <p>Height: {this.props.height}</p>
-        <p>Mass: {this.props.mass}</p>
-        <p>Skin color: {this.props.skin_color}</p>
-      </div>
-    );
-  }
+      <p>Name: {props.name}</p>
+      <p>Eye color: {props.eye_color}</p>
+      <p>Birth year: {props.birth_year}</p>
+      <p>Gender: {props.gender}</p>
+      <p>Hair color: {props.hair_color}</p>
+      <p>Height: {props.height}</p>
+      <p>Mass: {props.mass}</p>
+      <p>Skin color: {props.skin_color}</p>
+    </div>
+    </Link>
+  );
 }
 
-export default PeopleItem;
