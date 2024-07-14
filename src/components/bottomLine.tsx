@@ -2,13 +2,15 @@ import { ErrorInfo, useEffect, useState } from 'react';
 import PeopleItem from './peopleItem';
 import ErrorButton from './buttonError';
 import { props } from '../types/types';
-import SearchString from '../localStorage/localStorage';
+import useInput from '../hooks/useInput';
+import getString from '../localStorage/getString';
+import setString from '../localStorage/setString';
 import { Link } from 'react-router-dom';
 
 
 
 function BottomLine () {
-  const [searchQuerry, setSearchQuerry] = useState(SearchString.getString())
+  
   const [result, setResult] = useState([])
   const [loading, setLoading] = useState(false)
 
@@ -16,7 +18,7 @@ function BottomLine () {
   const PAGE_PATH = '/people';
   const SEARCH_PATH = '/?search=';
 
-
+  const inputValue = useInput(getString)
 
   const fetchData = (searchQuerry: string) => {
     setLoading(true)
@@ -30,16 +32,14 @@ function BottomLine () {
       .catch((error: ErrorInfo) => error);
   };
   useEffect(() => {
-    fetchData(searchQuerry)
-  },[searchQuerry])
+    fetchData(inputValue.searchQuerry)
+  },[inputValue.searchQuerry])
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuerry(e.target.value)
-  };
+  
 
   const getSearch = () => {
-    SearchString.setString(searchQuerry);
-    fetchData(searchQuerry);
+    setString(inputValue.searchQuerry);
+    fetchData(inputValue.searchQuerry);
   };
 
   return (
@@ -49,7 +49,7 @@ function BottomLine () {
           <li><Link to="/">Main</Link></li>
           <li><Link to="/404">404</Link></li>
         </nav>
-        <input type="search" onChange={handleInputChange} value={searchQuerry} />
+        <input type="search" {...inputValue} onChange={inputValue.handleInputChange} value={inputValue.searchQuerry} />
         <button onClick={getSearch}>Search</button>
         <ErrorButton />
       </div>
