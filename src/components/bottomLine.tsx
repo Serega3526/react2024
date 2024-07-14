@@ -11,7 +11,6 @@ import countPages from '../utils/utils';
 
 
 function BottomLine () {
-  // const [isOpen, setIsOpen] = useState(false)
   const [result, setResult] = useState([])
   const [loading, setLoading] = useState(false)
   const [pageCount, setPageCount] = useState(0)
