@@ -9,6 +9,8 @@ export type props = {
   mass: string;
   name: string;
   skin_color: string;
+  image: string;
+  click: () => void;
 };
 
 export type state = {

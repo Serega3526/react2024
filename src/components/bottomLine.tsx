@@ -7,22 +7,24 @@ import getString from '../localStorage/getString';
 import setString from '../localStorage/setString';
 import { Link } from 'react-router-dom';
 import countPages from '../utils/utils';
+import DetailCard from './detailCard';
 
 
 
 function BottomLine () {
   const [result, setResult] = useState([])
   const [loading, setLoading] = useState(false)
-  const [pageCount, setPageCount] = useState(0)
+  // const [pageCount, setPageCount] = useState(0)
   const [currPage, setCurrPage] = useState(1)
+  const [isActive, setIsActive] = useState(false)
 
   // const {num} = useParams
 
-  const BASE_PATH = 'https://swapi.dev/api';
-  const PAGE_PATH = '/people';
+  const BASE_PATH = 'https://rickandmortyapi.com/api';
+  const PAGE_PATH = '/character';
   const SEARCH_PATH = '/?search=';
   const ATTR_PATH = '&page='
-  const pages = countPages(pageCount)
+  const pages = countPages(100)
 
   const inputValue = useInput(getString)
   
@@ -32,13 +34,13 @@ function BottomLine () {
     fetch(`${BASE_PATH}${PAGE_PATH}${SEARCH_PATH}${searchQuerry}${ATTR_PATH}${currPage}`)
       .then((res) => res.json())
       .then((result) => {
-        setPageCount(result.count)
+        
+        // setPageCount(result.info.count)
         setResult(result.results)
         setLoading(false)
       })
       .catch((error: ErrorInfo) => error);
   },[currPage])
-  
   useEffect(() => {
     
     fetchData(inputValue.searchQuerry)
@@ -48,6 +50,10 @@ function BottomLine () {
     setString(inputValue.searchQuerry);
     fetchData(inputValue.searchQuerry);
   };
+console.log(result)
+  const activeCard = () => {
+    setIsActive(!isActive)
+  }
   return (
     <>
       <div className="topLine">
@@ -75,17 +81,22 @@ function BottomLine () {
                 mass={item.mass}
                 name={item.name}
                 skin_color={item.skin_color}
+                image={item.image}
                 key={key}
+                click={activeCard}
               />
             ))}
           </>
         </div>
+        {isActive && (
+          <div>
+            <DetailCard/>
+          </div>
+        )}
         <div className='pagination' >
         {pages.map((page, index) => 
             <Link className='pagePagination' key={index} onClick={() => {
-              console.log('1', page)
               setCurrPage(page)
-              console.log('2', page)
             }} to={`/page/${page}`}>{page}</Link>
           )}
         </div>
