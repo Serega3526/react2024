@@ -1,13 +1,14 @@
-import { useState } from "react"
+import { useState } from 'react';
 
-export default function useInput (innitialValue: () => string) {
-    const [searchQuerry, setSearchQuerry] = useState(innitialValue)
+export default function useInput(innitialValue: () => string) {
+  const [searchQuerry, setSearchQuerry] = useState(innitialValue);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuerry(e.target.value)
-    };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuerry(e.target.value);
+  };
 
-    return {
-        searchQuerry, handleInputChange
-    }
+  return {
+    searchQuerry,
+    handleInputChange,
+  };
 }

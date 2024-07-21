@@ -1,12 +1,15 @@
 .topLine {
   height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
-.topLine input{
+.topLine input {
   height: 30px;
+}
+.all__persone {
+  display: flex;
 }
 .bottomLine {
   display: flex;
@@ -56,9 +59,9 @@
   }
 }
 
-.pagination{
+.pagination {
   display: flex;
-    gap: 10px;
+  gap: 10px;
 }
 .pagePagination {
   width: 20px;
@@ -68,9 +71,9 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-    justify-content: center;
+  justify-content: center;
 }
-img{
+img {
   width: 200px;
   height: 200px;
 }

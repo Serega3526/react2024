@@ -1,65 +1,80 @@
-import { ErrorInfo, useCallback, useEffect, useState } from 'react';
+import { ErrorInfo, useCallback, useEffect, useState, MouseEvent } from 'react';
 import PeopleItem from './peopleItem';
 import ErrorButton from './buttonError';
-import { props } from '../types/types';
 import useInput from '../hooks/useInput';
 import getString from '../localStorage/getString';
 import setString from '../localStorage/setString';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import countPages from '../utils/utils';
 import DetailCard from './detailCard';
+// import { getSingleCharacter } from '../utils/utils';
+// import { person } from '../types/types';
+import { Pages } from './enums/enums';
 
+function BottomLine() {
+  const [result, setResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currPage, setCurrPage] = useState(1);
 
+  const inputValue = useInput(getString);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pages = countPages(100);
+  const searchParams = new URLSearchParams(location.search);
 
-function BottomLine () {
-  const [result, setResult] = useState([])
-  const [loading, setLoading] = useState(false)
-  // const [pageCount, setPageCount] = useState(0)
-  const [currPage, setCurrPage] = useState(1)
-  const [isActive, setIsActive] = useState(false)
+  const fetchData = useCallback(
+    (searchQuerry: string) => {
+      setLoading(true);
 
-  // const {num} = useParams
-
-  const BASE_PATH = 'https://rickandmortyapi.com/api';
-  const PAGE_PATH = '/character';
-  const SEARCH_PATH = '/?search=';
-  const ATTR_PATH = '&page='
-  const pages = countPages(100)
-
-  const inputValue = useInput(getString)
-  
-  const fetchData = useCallback((searchQuerry: string) => {
-    setLoading(true)
-    
-    fetch(`${BASE_PATH}${PAGE_PATH}${SEARCH_PATH}${searchQuerry}${ATTR_PATH}${currPage}`)
-      .then((res) => res.json())
-      .then((result) => {
-        
-        // setPageCount(result.info.count)
-        setResult(result.results)
-        setLoading(false)
-      })
-      .catch((error: ErrorInfo) => error);
-  },[currPage])
+      fetch(`${Pages.BASE_PATH}?${Pages.SEARCH_PATH}=${searchQuerry}&${Pages.ATTR_PATH}=${currPage}`)
+        .then((res) => res.json())
+        .then((result) => {
+          // setPageCount(result.info.count)
+          setResult(result.results);
+          setLoading(false);
+        })
+        .catch((error: ErrorInfo) => error);
+    },
+    [currPage],
+  );
   useEffect(() => {
-    
-    fetchData(inputValue.searchQuerry)
-  },[fetchData,inputValue.searchQuerry,currPage])
+    fetchData(inputValue.searchQuerry);
+  }, [fetchData, inputValue.searchQuerry, currPage]);
 
   const getSearch = () => {
     setString(inputValue.searchQuerry);
     fetchData(inputValue.searchQuerry);
   };
-console.log(result)
-  const activeCard = () => {
-    setIsActive(!isActive)
-  }
+
+  const handleDetail = (e: MouseEvent<HTMLElement>, url: string) => {
+    e.stopPropagation();
+    const pathUrl = url.split('/');
+    const id = pathUrl[pathUrl.length - 1];
+
+    searchParams.set(Pages.DETAILS, id);
+
+    navigate(`${location.pathname}?${searchParams.toString()}`);
+  };
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const page = parseInt(query.get(Pages.ATTR_PATH) || '1', 10);
+    if (page !== Number(query.get(Pages.ATTR_PATH))) {
+      navigate(`?page=${page}`, { replace: true });
+    }
+    setCurrPage(page);
+  }, [location.search, navigate]);
+
+
   return (
     <>
       <div className="topLine">
         <nav>
-          <li><Link to="/">Main</Link></li>
-          <li><Link to="/404">404</Link></li>
+          <li>
+            <Link to="/">Main</Link>
+          </li>
+          <li>
+            <Link to="/404">404</Link>
+          </li>
         </nav>
         <input type="search" onChange={inputValue.handleInputChange} value={inputValue.searchQuerry} />
         <button onClick={getSearch}>Search</button>
@@ -69,40 +84,36 @@ console.log(result)
         <span className="loader"></span>
       ) : (
         <>
-        <div className="bottomLine">
-          <>
-            {result.map((item: props, key) => (
-              <PeopleItem
-                birth_year={item.birth_year}
-                eye_color={item.eye_color}
-                gender={item.gender}
-                hair_color={item.hair_color}
-                height={item.height}
-                mass={item.mass}
-                name={item.name}
-                skin_color={item.skin_color}
-                image={item.image}
-                key={key}
-                click={activeCard}
-              />
-            ))}
-          </>
-        </div>
-        {isActive && (
-          <div>
-            <DetailCard/>
+          <div className="all__persone">
+            <div className="bottomLine">
+              <>
+                {result.map(({ name, image, url }) => (
+                  <div onClick={(e) => handleDetail(e, url)}>
+                    <PeopleItem name={name} image={image} key={url} />
+                  </div>
+                ))}
+              </>
+            </div>
+
+            <div>
+              <DetailCard />
+            </div>
           </div>
-        )}
-        <div className='pagination' >
-        {pages.map((page, index) => 
-            <Link className='pagePagination' key={index} onClick={() => {
-              setCurrPage(page)
-            }} to={`/page/${page}`}>{page}</Link>
-          )}
-        </div>
+          <div className="pagination">
+            {pages.map((page, index) => (
+              <Link
+                className="pagePagination"
+                key={index}
+                onClick={() => {
+                  setCurrPage(page);
+                }}
+                to={`?page=${page}`}>
+                {page}
+              </Link>
+            ))}
+          </div>
         </>
       )}
-      
     </>
   );
 }

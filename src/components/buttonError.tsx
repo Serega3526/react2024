@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 
-function ErrorButton () {
-  const [isError, setIsError] = useState(false)
+function ErrorButton() {
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (isError) {
       throw new Error('Тут все сломалось');
     }
-  },[isError])
+  }, [isError]);
 
   const handleError = () => {
-    setIsError(true );
+    setIsError(true);
   };
 
   return <button onClick={handleError}>ERROR</button>;

@@ -11,11 +11,11 @@ class App extends Component {
       <>
         <ErrorBoundary>
           <Routes>
-            <Route path='/' element={<BottomLine />}>
-              <Route index element={<BottomLine />}/>
-              <Route path='/test' element={<BottomLine />}/>
-              <Route path='/test/:num' element={<BottomLine />}/>
-              <Route path='*' element={<NotFoundPage />}/>
+            <Route path="/" element={<BottomLine />}>
+              <Route index element={<BottomLine />} />
+              <Route path="/test" element={<BottomLine />} />
+              <Route path="?page=:num" element={<BottomLine />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </ErrorBoundary>

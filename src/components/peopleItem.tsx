@@ -1,14 +1,8 @@
-
 import { props } from '../types/types';
 
-
-export default function PeopleItem (props: props) {
-  
-
-  
-
+export default function PeopleItem(props: props) {
   return (
-      <div className="peopleCard" onClick={props.click}>
+    <div className="peopleCard" onClick={props.click}>
       <img src={props.image} alt="" />
       <p>{props.name}</p>
       {/* <p>Eye color: {props.eye_color}</p>
@@ -21,4 +15,3 @@ export default function PeopleItem (props: props) {
     </div>
   );
 }
-
