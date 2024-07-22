@@ -64,7 +64,6 @@ function BottomLine() {
     setCurrPage(page);
   }, [location.search, navigate]);
 
-
   return (
     <>
       <div className="topLine">
