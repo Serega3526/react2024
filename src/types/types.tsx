@@ -1,7 +1,8 @@
-export type props = {
+export interface props  {
   name: string;
   image: string;
-};
+  click: (e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
+}
 
 export type state = {
   searchQuerry: string;

@@ -89,8 +89,8 @@ function BottomLine() {
             <div className="bottomLine">
               <>
                 {result.map(({ name, image, url }) => (
-                  <div onClick={(e) => handleDetail(e, url)}>
-                    <PeopleItem name={name} image={image} key={url} />
+                  <div>
+                    <PeopleItem name={name} image={image} key={url} click={(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => handleDetail(e, url)}/>
                   </div>
                 ))}
               </>
