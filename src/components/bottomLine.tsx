@@ -7,9 +7,8 @@ import setString from '../localStorage/setString';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import countPages from '../utils/utils';
 import DetailCard from './detailCard';
-// import { getSingleCharacter } from '../utils/utils';
-// import { person } from '../types/types';
 import { Pages } from './enums/enums';
+import { useTheme } from '../context/contextCreater';
 
 function BottomLine() {
   const [result, setResult] = useState([]);
@@ -21,6 +20,8 @@ function BottomLine() {
   const location = useLocation();
   const pages = countPages(100);
   const searchParams = new URLSearchParams(location.search);
+
+  const { theme, change } = useTheme();
 
   const fetchData = useCallback(
     (searchQuerry: string) => {
@@ -78,6 +79,7 @@ function BottomLine() {
         <input type="search" onChange={inputValue.handleInputChange} value={inputValue.searchQuerry} />
         <button onClick={getSearch}>Search</button>
         <ErrorButton />
+        <button onClick={change}>{theme === 'light' ? 'Change to Dark theme' : 'Change to Light theme'}</button>
       </div>
       {loading ? (
         <span className="loader"></span>

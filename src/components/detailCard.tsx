@@ -27,7 +27,7 @@ export default function DetailCard() {
       })
       .catch(() => {
         console.error();
-      })
+      });
   }, [id]);
 
   const handleDelDetails = () => {

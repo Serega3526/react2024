@@ -77,3 +77,15 @@ img {
   width: 200px;
   height: 200px;
 }
+.light {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+.dark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
