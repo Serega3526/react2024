@@ -5,7 +5,6 @@ import { Route, Routes } from 'react-router-dom';
 import NotFoundPage from './components/notFound';
 import { useTheme } from './context/contextCreater';
 
-
 function App() {
   const { theme } = useTheme();
   return (

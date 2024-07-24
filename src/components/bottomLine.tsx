@@ -9,6 +9,7 @@ import countPages from '../utils/utils';
 import DetailCard from './detailCard';
 import { Pages } from './enums/enums';
 import { useTheme } from '../context/contextCreater';
+import ModalCheckedItem from './modalCheckedItem';
 
 function BottomLine() {
   const [result, setResult] = useState([]);
@@ -90,7 +91,12 @@ function BottomLine() {
               <>
                 {result.map(({ name, image, url }) => (
                   <div>
-                    <PeopleItem name={name} image={image} key={url} click={(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => handleDetail(e, url)}/>
+                    <PeopleItem
+                      name={name}
+                      image={image}
+                      key={url}
+                      click={(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => handleDetail(e, url)}
+                    />
                   </div>
                 ))}
               </>
@@ -112,6 +118,7 @@ function BottomLine() {
                 {page}
               </Link>
             ))}
+            <ModalCheckedItem />
           </div>
         </>
       )}

@@ -1,4 +1,4 @@
-export interface props  {
+export interface props {
   name: string;
   image: string;
   click: (e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
