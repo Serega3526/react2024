@@ -1,4 +1,4 @@
-import { ErrorInfo, useCallback, useEffect, useState, MouseEvent } from 'react';
+import { useEffect, useState, MouseEvent } from 'react';
 import PeopleItem from './peopleItem';
 import ErrorButton from './buttonError';
 import useInput from '../hooks/useInput';
@@ -10,10 +10,9 @@ import DetailCard from './detailCard';
 import { Pages } from './enums/enums';
 import { useTheme } from '../context/contextCreater';
 import ModalCheckedItem from './modalCheckedItem';
+import { RAMApi } from '../services/apiRAM';
 
 function BottomLine() {
-  const [result, setResult] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [currPage, setCurrPage] = useState(1);
 
   const inputValue = useInput(getString);
@@ -24,28 +23,10 @@ function BottomLine() {
 
   const { theme, change } = useTheme();
 
-  const fetchData = useCallback(
-    (searchQuerry: string) => {
-      setLoading(true);
-
-      fetch(`${Pages.BASE_PATH}?${Pages.SEARCH_PATH}=${searchQuerry}&${Pages.ATTR_PATH}=${currPage}`)
-        .then((res) => res.json())
-        .then((result) => {
-          // setPageCount(result.info.count)
-          setResult(result.results);
-          setLoading(false);
-        })
-        .catch((error: ErrorInfo) => error);
-    },
-    [currPage],
-  );
-  useEffect(() => {
-    fetchData(inputValue.searchQuerry);
-  }, [fetchData, inputValue.searchQuerry, currPage]);
+  const { data, isLoading } = RAMApi.useGetAllPersonsQuery({searchQuerry: inputValue.searchQuerry, page: currPage})
 
   const getSearch = () => {
     setString(inputValue.searchQuerry);
-    fetchData(inputValue.searchQuerry);
   };
 
   const handleDetail = (e: MouseEvent<HTMLElement>, url: string) => {
@@ -82,23 +63,25 @@ function BottomLine() {
         <ErrorButton />
         <button onClick={change}>{theme === 'light' ? 'Change to Dark theme' : 'Change to Light theme'}</button>
       </div>
-      {loading ? (
+      {isLoading ? (
         <span className="loader"></span>
       ) : (
         <>
           <div className="all__persone">
             <div className="bottomLine">
               <>
-                {result.map(({ name, image, url }) => (
-                  <div>
-                    <PeopleItem
-                      name={name}
-                      image={image}
-                      key={url}
-                      click={(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => handleDetail(e, url)}
-                    />
-                  </div>
-                ))}
+                {data && (
+                  data.results.map(({ name, image, url }) => (
+                    <div>
+                      <PeopleItem
+                        name={name}
+                        image={image}
+                        key={url}
+                        click={(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => handleDetail(e, url)}
+                      />
+                    </div>
+                  ))
+                )}
               </>
             </div>
 

@@ -17,4 +17,14 @@ export type person = {
   species: string;
   status: string;
   type: string;
+  url: string
 };
+
+export type info = {
+  count: number
+}
+
+export type AllPersons = {
+  results: person[],
+  info: info[]
+}
