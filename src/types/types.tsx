@@ -17,14 +17,14 @@ export type person = {
   species: string;
   status: string;
   type: string;
-  url: string
+  url: string;
 };
 
 export type info = {
-  count: number
-}
+  count: number;
+};
 
 export type AllPersons = {
-  results: person[],
-  info: info[]
-}
+  results: person[];
+  info: info[];
+};
