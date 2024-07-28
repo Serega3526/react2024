@@ -2,12 +2,25 @@ import { render, screen } from '@testing-library/react';
 import ErrorBoundary from './ErrorBoundary';
 
 describe('ErrorBoundary', () => {
-  it('renders the children when there is no error', () => {
+  it('renders children when no error is thrown', () => {
     render(
       <ErrorBoundary>
-        <div>Child content</div>
+        <div data-testid="render-child">Child component</div>
       </ErrorBoundary>,
     );
-    expect(screen.getByText('Child content')).toBeInTheDocument();
+    expect(screen.getByTestId('render-child')).toBeInTheDocument();
+  });
+
+  it('renders error message when error is thrown', () => {
+    const ThrowError = () => {
+      throw new Error('Test');
+    };
+
+    render(
+      <ErrorBoundary>
+        <ThrowError />
+      </ErrorBoundary>,
+    );
+    expect(screen.getByText('Sorry.. there was an error')).toBeInTheDocument();
   });
 });

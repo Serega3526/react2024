@@ -6,19 +6,19 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import ModalCheckedItem from './modalCheckedItem';
 import { vi } from 'vitest';
 
-const renderWithProviders = (ui: React.ReactElement, { route = `?${Pages.ATTR_PATH}=1` } = {}) => {
-  window.history.pushState({}, 'Test page', route);
+const renderContent = (content: React.ReactElement) => {
+  window.history.pushState({}, 'Test', `?${Pages.ATTR_PATH}=1`);
 
   return render(
     <Provider store={store}>
-      <BrowserRouter>{ui}</BrowserRouter>
+      <BrowserRouter>{content}</BrowserRouter>
     </Provider>,
   );
 };
 
 describe('ModalCheckedItem', () => {
   it('display modal content', () => {
-    renderWithProviders(<ModalCheckedItem />);
+    renderContent(<ModalCheckedItem />);
     waitFor(() => {
       expect(screen.getByText('Create file')).toBeInTheDocument();
       expect(screen.getByText('Delete')).toBeInTheDocument();
@@ -27,7 +27,7 @@ describe('ModalCheckedItem', () => {
   });
   it('click to delete button', () => {
     const handleClick = vi.fn();
-    renderWithProviders(<ModalCheckedItem />);
+    renderContent(<ModalCheckedItem />);
     waitFor(() => {
       fireEvent.click(screen.getByText('Delete'));
       expect(handleClick).toHaveBeenCalled();

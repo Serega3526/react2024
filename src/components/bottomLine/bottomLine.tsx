@@ -39,9 +39,9 @@ function BottomLine() {
     navigate(`${location.pathname}?${searchParams.toString()}`);
   };
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const page = parseInt(query.get(Pages.ATTR_PATH) || '1', 10);
-    if (page !== Number(query.get(Pages.ATTR_PATH))) {
+    const url = new URLSearchParams(location.search);
+    const page = parseInt(url.get(Pages.ATTR_PATH) || '1', 10);
+    if (page !== Number(url.get(Pages.ATTR_PATH))) {
       navigate(`?page=${page}`, { replace: true });
     }
     setCurrPage(page);
@@ -55,7 +55,7 @@ function BottomLine() {
             <Link to="/">Main</Link>
           </li>
           <li>
-            <Link to="/404">404</Link>
+            <Link to="/werwerwe">404</Link>
           </li>
         </nav>
         <input type="search" onChange={inputValue.handleInputChange} value={inputValue.searchQuerry} />

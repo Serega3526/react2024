@@ -11,15 +11,15 @@ function App() {
     <>
       <BrowserRouter>
         <div className={`body ${theme}`}>
-          <div className="root">
+          <div data-testid="test" className="root">
             <div className={theme}>
               <ErrorBoundary>
                 <Routes>
                   <Route path="/" element={<BottomLine />}>
                     <Route index element={<BottomLine />} />
                     <Route path="?page=:num" element={<BottomLine />} />
-                    <Route path="*" element={<NotFoundPage />} />
                   </Route>
+                  <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </ErrorBoundary>
             </div>

@@ -1,12 +1,12 @@
-import { describe } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, vi } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '../../store/store';
 import { Pages } from '../enums/enums';
 import PeopleItem from './peopleItem';
 
-const renderWithProviders = (ui: React.ReactElement, { route = `?${Pages.ATTR_PATH}=1` } = {}) => {
+const renderContent = (ui: React.ReactElement, { route = `?${Pages.ATTR_PATH}=1` } = {}) => {
   window.history.pushState({}, 'Test page', route);
 
   return render(
@@ -18,7 +18,7 @@ const renderWithProviders = (ui: React.ReactElement, { route = `?${Pages.ATTR_PA
 
 describe('Bottom Line', () => {
   it('display top content', () => {
-    renderWithProviders(
+    renderContent(
       <PeopleItem
         name={''}
         image={''}
@@ -31,4 +31,18 @@ describe('Bottom Line', () => {
       expect(screen.getByText('Add to state')).toBeInTheDocument();
     });
   });
+  it('click on button detail', () => {
+    const handleClick = vi.fn();
+    renderContent(<PeopleItem
+      name={''}
+      image={''}
+      click={function (): void {
+        throw new Error('Function not implemented.');
+      }}
+    />,);
+    waitFor(() => {
+      fireEvent.click(screen.getByRole('checkbox'));
+      expect(handleClick).toHaveBeenCalled();
+    });
+  })
 });

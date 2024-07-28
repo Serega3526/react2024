@@ -20,7 +20,7 @@ export default function DetailCard() {
   return (
     <>
       {isLoading ? (
-        <span className="loader"></span>
+        <span data-testid="is-loading" className="loader"></span>
       ) : data ? (
         <div>
           <button data-testid="detail-card-btn" onClick={handleDelDetails}>

@@ -26,7 +26,7 @@ export default function PeopleItem(props: props) {
         <input type="checkbox" checked={count === 0 ? false : checked} onChange={chengeCheckbox} />
         <p>Add to state</p>
       </div>
-      <div className="wrap__person" onClick={props.click}>
+      <div data-testid="detail-click" className="wrap__person" onClick={props.click}>
         <img src={props.image} alt="" />
         <p>{props.name}</p>
       </div>
