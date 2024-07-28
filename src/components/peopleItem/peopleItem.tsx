@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { decrement, increment } from '../../utils/counter';
 import { useState } from 'react';
 import { RootState } from '../../store/store';
+// import { addCard } from '../../utils/cardInStore';
 
 export default function PeopleItem(props: props) {
   const [checked, setChecked] = useState(false);
@@ -13,6 +14,7 @@ export default function PeopleItem(props: props) {
     console.log(checked);
     if (!checked) {
       dispatch(increment());
+      // dispatch(addCard())
     } else {
       dispatch(decrement());
     }

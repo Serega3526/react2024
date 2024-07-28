@@ -6,7 +6,6 @@ import { store } from '../../store/store';
 import { BrowserRouter } from 'react-router-dom';
 import { Pages } from '../enums/enums';
 
-
 const renderContent = (content: React.ReactElement) => {
   window.history.pushState({}, 'Test', `?${Pages.SEARCH_PATH}=1&${Pages.DETAILS}=1`);
 
@@ -29,5 +28,5 @@ describe('Top Content', () => {
       fireEvent.click(screen.getByText('ERROR'));
       expect(handleClick).toHaveBeenCalled();
     });
-  })
+  });
 });

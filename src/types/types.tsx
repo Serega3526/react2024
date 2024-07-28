@@ -17,7 +17,6 @@ export type person = {
   species: string;
   status: string;
   type: string;
-  url: string;
 };
 
 export type info = {

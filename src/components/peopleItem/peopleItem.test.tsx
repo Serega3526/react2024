@@ -33,16 +33,18 @@ describe('Bottom Line', () => {
   });
   it('click on button detail', () => {
     const handleClick = vi.fn();
-    renderContent(<PeopleItem
-      name={''}
-      image={''}
-      click={function (): void {
-        throw new Error('Function not implemented.');
-      }}
-    />,);
+    renderContent(
+      <PeopleItem
+        name={''}
+        image={''}
+        click={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />,
+    );
     waitFor(() => {
       fireEvent.click(screen.getByRole('checkbox'));
       expect(handleClick).toHaveBeenCalled();
     });
-  })
+  });
 });

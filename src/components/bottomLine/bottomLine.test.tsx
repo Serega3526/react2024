@@ -36,7 +36,7 @@ describe('Bottom Line', () => {
       fireEvent.click(screen.getByText('Search'));
       expect(handleClick).toHaveBeenCalled();
     });
-  })
+  });
   it('click on button detail', () => {
     const handleClick = vi.fn();
     renderContent(<BottomLine />);
@@ -44,5 +44,5 @@ describe('Bottom Line', () => {
       fireEvent.click(screen.getByText('Rick Sanchez'));
       expect(handleClick).toHaveBeenCalled();
     });
-  })
+  });
 });

@@ -34,7 +34,5 @@ describe('Detail card', () => {
       expect(handleClick).toHaveBeenCalled();
     });
   });
-  it('Visible loading', () => {
-    
-  })
+  it('Visible loading', () => {});
 });
