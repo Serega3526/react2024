@@ -23,9 +23,9 @@ describe('Bottom Line', () => {
       expect(screen.getByText('main')).toBeInTheDocument();
     });
   });
-  it('display bottom content', () => {
+  it('display bottom content', async () => {
     renderContent(<BottomLine />);
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByTestId('bottom-content')).toBeInTheDocument();
     });
   });
