@@ -20,6 +20,10 @@ export type person = {
   url: string;
 };
 
+export type click = {
+  click: (e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
+};
+
 export type info = {
   count: number;
 };

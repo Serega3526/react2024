@@ -1,4 +1,4 @@
-import { useEffect, useState, MouseEvent } from 'react';
+import { useEffect, useState } from 'react';
 import PeopleItem from '../peopleItem/peopleItem';
 import ErrorButton from '../buttonError/buttonError';
 import useInput from '../../hooks/useInput';
@@ -11,15 +11,19 @@ import { Pages } from '../enums/enums';
 import { useTheme } from '../../context/contextCreater';
 import ModalCheckedItem from '../modalCheckedItem/modalCheckedItem';
 import { RAMApi } from '../../services/apiRAM';
+import { person } from '../../types/types';
+import { useDispatch } from 'react-redux';
+import { setPage } from '../../utils/constants';
 
-function BottomLine() {
+export function BottomLine() {
   const [currPage, setCurrPage] = useState(1);
 
   const inputValue = useInput(getString);
   const navigate = useNavigate();
   const location = useLocation();
   const pages = countPages(100);
-  const searchParams = new URLSearchParams(location.search);
+
+  const dispatch = useDispatch();
 
   const { theme, change } = useTheme();
 
@@ -29,15 +33,6 @@ function BottomLine() {
     setString(inputValue.searchQuerry);
   };
 
-  const handleDetail = (e: MouseEvent<HTMLElement>, url: string) => {
-    e.stopPropagation();
-    const pathUrl = url.split('/');
-    const id = pathUrl[pathUrl.length - 1];
-
-    searchParams.set(Pages.DETAILS, id);
-
-    navigate(`${location.pathname}?${searchParams.toString()}`);
-  };
   useEffect(() => {
     const url = new URLSearchParams(location.search);
     const page = parseInt(url.get(Pages.ATTR_PATH) || '1', 10);
@@ -46,6 +41,11 @@ function BottomLine() {
     }
     setCurrPage(page);
   }, [location.search, navigate]);
+
+  const handleCurPage = (page: number): void => {
+    setCurrPage(page);
+    dispatch(setPage(page));
+  };
 
   return (
     <>
@@ -71,13 +71,18 @@ function BottomLine() {
             <div className="bottomLine">
               <>
                 {data &&
-                  data.results.map(({ name, image, url }) => (
-                    <div>
+                  data.results.map((person: person) => (
+                    <div key={person.url}>
                       <PeopleItem
-                        name={name}
-                        image={image}
-                        key={url}
-                        click={(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => handleDetail(e, url)}
+                        name={person.name}
+                        image={person.image}
+                        key={person.url}
+                        gender={person.gender}
+                        species={person.species}
+                        status={person.status}
+                        url={person.url}
+                        type={person.type}
+                        // click={(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => handleDetail(e, person.url)}
                       />
                     </div>
                   ))}
@@ -90,13 +95,7 @@ function BottomLine() {
           </div>
           <div className="pagination">
             {pages.map((page, index) => (
-              <Link
-                className="pagePagination"
-                key={index}
-                onClick={() => {
-                  setCurrPage(page);
-                }}
-                to={`?page=${page}`}>
+              <Link className="pagePagination" key={index} onClick={() => handleCurPage(page)} to={`?page=${page}`}>
                 {page}
               </Link>
             ))}
