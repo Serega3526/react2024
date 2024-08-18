@@ -1,14 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import shemaInputs from "../../utils/shema";
 import { IFormInput } from "../../types/types";
+import { useDispatch } from "react-redux";
+import { addToStateControl } from "../../app/slices/controlPageSlice/controlPageSlice";
 
 
  
 export const ControlPage: React.FC = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>({
+    const { register, handleSubmit, formState: { errors }, formState } = useForm<IFormInput>({
       resolver: yupResolver<IFormInput>(shemaInputs),
       mode: "onTouched",
       reValidateMode: "onChange",
@@ -26,18 +30,22 @@ export const ControlPage: React.FC = () => {
     });
 
       const onSubmitHandler = (data: IFormInput) => {
-        console.log({ data });
-        reset();
+        const formDataForSave = { ...data };
+        dispatch(addToStateControl(formDataForSave))
+        console.log({ formDataForSave });
+        navigate('/')
       };
+
+      const {isValid} = formState
 
   return (
     <>
-      <Link to="/">MainPage</Link>;
+      <Link to="/">Back to Main Page</Link>;
       <form onSubmit={handleSubmit(onSubmitHandler)}>
 
         <label>Name</label>
         <input {...register("name")} placeholder="Name" type="text" name="name" />
-        {errors.name && <p>{errors.name.message}</p>}
+        {errors.name ? (<p>{errors.name.message}</p>) : <p>Заполните поле Name</p>}
 
         <label>Age</label>
           <input {...register("age")} placeholder="Age" type="text" name="age"  />
@@ -74,7 +82,8 @@ export const ControlPage: React.FC = () => {
         <input {...register("country")} placeholder="Country" type="text" name="country" />
         {errors.name && <p>{errors.name.message}</p>}
 
-        <button type="submit">Sign in</button>
+        <button type="submit" disabled={!isValid}>Sign in</button>
+        {!isValid && <p>Невалидная форма</p>}
       </form>
     </>
   );
