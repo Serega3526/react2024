@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import controlSlice from './slices/controlPageSlice/controlPageSlice'
+import uncontrolSlice from './slices/uncontrolPageSlice/uncontrolPageSlice'
 
 
 export const store = configureStore({
   reducer: {
     control: controlSlice,
+    uncontrol: uncontrolSlice,
   },
 })
 

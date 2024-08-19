@@ -45,23 +45,23 @@ export const ControlPage: React.FC = () => {
 
         <label>Name</label>
         <input {...register("name")} placeholder="Name" type="text" name="name" />
-        {errors.name ? (<p>{errors.name.message}</p>) : <p>Заполните поле Name</p>}
+        {errors.name ? (<p className="error__message">{errors.name.message}</p>) : <p></p>}
 
         <label>Age</label>
           <input {...register("age")} placeholder="Age" type="text" name="age"  />
-        {errors.age && <p>{errors.age.message}</p>}
+          {errors.age ? (<p className="error__message">{errors.age.message}</p>) : <p></p>}
 
         <label>Email</label>
           <input {...register("email")} placeholder="Email" type="email" name="email" />
-        {errors.email && <p>{errors.email.message}</p>}
+          {errors.email ? (<p className="error__message">{errors.email.message}</p>) : <p></p>}
 
         <label>Password</label>
           <input {...register("password1")} placeholder="Password1" type="password" name="password1" />
-        {errors.password1 && <p>{errors.password1.message}</p>}
+          {errors.password1 ? (<p className="error__message">{errors.password1.message}</p>) : <p></p>}
 
         <label>Password</label>
           <input {...register("password2")} placeholder="Password2" type="password" name="password2" />
-        {errors.password2 && <p>{errors.password2.message}</p>}
+          {errors.password2 ? (<p className="error__message">{errors.password2.message}</p>) : <p></p>}
 
         <label>Gender</label>
         <select {...register("gender")}>
@@ -72,18 +72,18 @@ export const ControlPage: React.FC = () => {
 
         <label>T&C</label>
           <input {...register("TC")} type="checkbox" name="T&C" />
-        {errors.name && <p>{errors.name.message}</p>}
+          {errors.TC ? (<p className="error__message">{errors.TC.message}</p>) : <p></p>}
 
         <label>Picture</label>
           <input {...register("picture")} type="file" name="picture" />
-        {errors.name && <p>{errors.name.message}</p>}
+          {errors.picture ? (<p className="error__message">{errors.picture.message}</p>) : <p></p>}
 
         <label>Country</label>
         <input {...register("country")} placeholder="Country" type="text" name="country" />
-        {errors.name && <p>{errors.name.message}</p>}
+        {errors.country ? (<p className="error__message">{errors.country.message}</p>) : <p></p>}
 
         <button type="submit" disabled={!isValid}>Sign in</button>
-        {!isValid && <p>Невалидная форма</p>}
+        {!isValid && <p className="error__message">Fill in all the fields correctly</p>}
       </form>
     </>
   );

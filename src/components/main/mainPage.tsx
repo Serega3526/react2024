@@ -12,6 +12,15 @@ const genderControl = useSelector((state: RootState) => state.control.data.gende
 const TCControl = useSelector((state: RootState) => state.control.data.TC)
 const countryControl = useSelector((state: RootState) => state.control.data.country)
 
+const nameUncontrol = useSelector((state: RootState) => state.uncontrol.data.name)
+const ageUncontrol = useSelector((state: RootState) => state.uncontrol.data.age)
+const password1Uncontrol = useSelector((state: RootState) => state.uncontrol.data.password1)
+const password2Uncontrol = useSelector((state: RootState) => state.uncontrol.data.password2)
+const emailUncontrol = useSelector((state: RootState) => state.uncontrol.data.email)
+const genderUncontrol = useSelector((state: RootState) => state.uncontrol.data.gender)
+const TCUncontrol = useSelector((state: RootState) => state.uncontrol.data.TC)
+const countryUncontrol = useSelector((state: RootState) => state.uncontrol.data.country)
+
   return (
     <>
     <nav>
@@ -26,7 +35,7 @@ const countryControl = useSelector((state: RootState) => state.control.data.coun
     <div>
     {nameControl && (
       <div>
-        <h2>Last contol</h2>
+        <h2>Last control</h2>
       <p>Name: {nameControl}</p>
       <p>Age: {ageControl}</p>
       <p>Password1: {password1Control}</p>
@@ -35,6 +44,19 @@ const countryControl = useSelector((state: RootState) => state.control.data.coun
       <p>Gender: {genderControl}</p>
       <p>TC: {String(TCControl)}</p>
       <p>Country: {countryControl}</p>
+    </div>
+    )}
+    {nameUncontrol && (
+      <div>
+        <h2>Last uncontrol</h2>
+      <p>Name: {nameUncontrol}</p>
+      <p>Age: {ageUncontrol}</p>
+      <p>Password1: {password1Uncontrol}</p>
+      <p>Password2: {password2Uncontrol}</p>
+      <p>Email: {emailUncontrol}</p>
+      <p>Gender: {genderUncontrol}</p>
+      <p>TC: {String(TCUncontrol)}</p>
+      <p>Country: {countryUncontrol}</p>
     </div>
     )}
     </div>
