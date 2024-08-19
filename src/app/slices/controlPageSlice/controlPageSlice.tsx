@@ -1,21 +1,20 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IFormInput } from '../../../types/types'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IFormInput } from "../../../types/types";
 
-
-const initialState: {data: IFormInput} = {
-    data: {}
-}
+const initialState: { data: IFormInput } = {
+  data: {},
+};
 
 export const controlSlice = createSlice({
-  name: 'control',
+  name: "control",
   initialState,
   reducers: {
     addToStateControl: (state, action: PayloadAction<IFormInput>) => {
-        state.data = action.payload
+      state.data = action.payload;
     },
   },
-})
+});
 
-export const { addToStateControl } = controlSlice.actions
+export const { addToStateControl } = controlSlice.actions;
 
-export default controlSlice.reducer
+export default controlSlice.reducer;
